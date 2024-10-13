@@ -1,1 +1,44 @@
+def monoalphabetic_cipher(text, key, mode='encrypt'):
+    # Convert text to upper case
+    text = text.upper()
 
+    # Variable to store results
+    result_text = ''
+
+    # Set to encryption or decryption mode
+    source_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    
+    if mode == 'encrypt':
+        target_alphabet = key
+    elif mode == 'decrypt':
+        target_alphabet = source_alphabet
+        source_alphabet = key
+    else:
+        raise ValueError("Mode must be 'encrypt' or 'decrypt'")
+
+    # Process all characters in the text
+    for char in text:
+        if char in source_alphabet:
+            # Find the position of that letter
+            index = source_alphabet.index(char)
+
+            # Find letters to encrypt or decrypt and add them to the result
+            result_text += target_alphabet[index]
+        else:
+            # If the character is not a letter, add it directly
+            result_text += char
+
+    return result_text
+
+# Example usage
+if __name__ == "__main__":
+    plaintext = input("Message: ")
+    key = "QWERTYUIOPLKJHGFDSAZXCVBNM"  # Random letter sequence (key)
+
+    # Encrypt
+    encrypted_message = monoalphabetic_cipher(plaintext, key, mode='encrypt')
+    print(f"Encrypted message: {encrypted_message}")
+
+    # Decrypt
+    decrypted_message = monoalphabetic_cipher(encrypted_message, key, mode='decrypt')
+    print(f"Decrypted message: {decrypted_message}")
